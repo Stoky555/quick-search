@@ -11,6 +11,9 @@ from urllib.parse import urlencode
 
 HOME = Path.home()
 TARGETS = ('Google', 'Codex', 'Claude')
+# Codex and Claude start here instead of the home folder: Claude Code never
+# remembers trust for the home folder, so it asked on every launch. Ignored by git.
+WORKSPACE = Path(__file__).resolve().parent / 'workspace'
 LOG_FILE = (Path(os.environ.get('XDG_STATE_HOME') or HOME / '.local/state')
             / 'quick-search' / 'quick-search.log')
 log = logging.getLogger('quick-search')
@@ -53,10 +56,11 @@ def launch(target, prompt):
     terminal = shutil.which('ptyxis')
     if not terminal:
         raise RuntimeError('Ptyxis terminal was not found.')
+    WORKSPACE.mkdir(exist_ok=True)
     log.info('Opening %s (%s) in Ptyxis', target, executable)
     # Argument arrays preserve quotes, newlines and shell characters literally.
-    subprocess.Popen([terminal, '--new-window', '--working-directory=' + str(HOME),
-                      '--', str(executable), '--', prompt], cwd=HOME)
+    subprocess.Popen([terminal, '--new-window', '--working-directory=' + str(WORKSPACE),
+                      '--', str(executable), '--', prompt], cwd=WORKSPACE)
 
 
 def main():

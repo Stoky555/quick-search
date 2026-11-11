@@ -12,9 +12,11 @@ git clone https://github.com/Stoky555/quick-search.git
 
 Type a prompt, choose with Up/Down, and press Enter. Google is selected initially.
 Escape, or clicking another window, closes the launcher. Repeating the shortcut
-presents the existing window. AI conversations open in Ptyxis, starting in your
-home folder. They retain their normal permission prompts. This launcher does not
-infer the active project.
+presents the existing window. AI conversations open in Ptyxis, starting in the
+`workspace/` folder next to `quick_search.py` (created on first use and ignored
+by git), so each CLI asks once whether to trust it instead of on every launch.
+You can put your own `CLAUDE.md` or `AGENTS.md` there. They retain their normal
+permission prompts. This launcher does not infer the active project.
 
 If something can't be opened, the error appears under the list along with the
 log location: `~/.local/state/quick-search/quick-search.log`. Prompts are not
